@@ -23,17 +23,20 @@ train_on_SAW = False
 
 
 opt = TrainOptions().parse()  # set CUDA_VISIBLE_DEVICES before import torch
-root = "/home/zl548/phoenix24/"
-full_root = root +'/phoenix/S6/zl548/'
+# root = "/home/zl548/phoenix24/"
+# full_root = root +'/phoenix/S6/zl548/'
 
-train_list_CGIntrinsics = full_root + '/CGIntrinsics/intrinsics_final/train_list/'
+# train_list_CGIntrinsics = full_root + '/CGIntrinsics/intrinsics_final/train_list/'
+train_list_CGIntrinsics = full_root + './intrinsics_final/train_list/'
 data_loader_S = CreateDataLoaderCGIntrinsics(full_root, train_list_CGIntrinsics)
 
-train_list_Render = full_root + '/CGIntrinsics/intrinsics/render_list/'
+# train_list_Render = full_root + '/CGIntrinsics/intrinsics/render_list/'
+train_list_Render = full_root + './intrinsics/render_list/'
 data_loader_Render = CreateDataLoaderRender(full_root, train_list_Render)
 
 if train_on_IIW:
-    train_list_IIW = full_root + '/CGIntrinsics/IIW/train_list/'
+    # train_list_IIW = full_root + '/CGIntrinsics/IIW/train_list/'
+    train_list_IIW = full_root + './IIW/train_list/'
     data_loader_IIW = CreateDataLoaderIIW(full_root, train_list_IIW, 0)
     dataset_IIW = data_loader_IIW.load_data()
     dataset_size_IIW = len(data_loader_IIW)
@@ -41,7 +44,8 @@ if train_on_IIW:
     iterator_IIW = iter(dataset_IIW)
 
 if train_on_SAW:
-    train_list_SAW = full_root + '/CGIntrinsics/SAW/train_list/'
+    # train_list_SAW = full_root + '/CGIntrinsics/SAW/train_list/'
+    train_list_SAW = full_root + './SAW/train_list/'
     data_loader_SAW = CreateDataLoaderSAW(full_root, train_list_SAW, 0)
     dataset_SAW = data_loader_SAW.load_data()
     dataset_size_SAW = len(data_loader_SAW)
