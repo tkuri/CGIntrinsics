@@ -25,6 +25,7 @@ train_on_SAW = False
 opt = TrainOptions().parse()  # set CUDA_VISIBLE_DEVICES before import torch
 # root = "/home/zl548/phoenix24/"
 # full_root = root +'/phoenix/S6/zl548/'
+full_root = ''
 
 # train_list_CGIntrinsics = full_root + '/CGIntrinsics/intrinsics_final/train_list/'
 train_list_CGIntrinsics = full_root + './intrinsics_final/train_list/'
