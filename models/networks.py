@@ -1,7 +1,8 @@
 import torch
 import torch.nn as nn
 import torch.sparse
-from torch.autograd import Variable
+# from torch.autograd import Variable
+from torch.autograd import Tensor
 import numpy as np
 import sys
 from torch.autograd import Function
