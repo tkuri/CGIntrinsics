@@ -910,7 +910,7 @@ class JointLoss(nn.Module):
         gt_vec = gt_vec.unsqueeze(1).float().cpu()
         pred_vec = pred_vec.unsqueeze(1).float().cpu()
 
-        scale, _ = torch.gels(gt_vec.data, pred_vec.data)
+        scale, _ = torch.lstsq(gt_vec.data, pred_vec.data)
         scale = scale[0,0]
 
         # print("scale" , scale)
@@ -953,7 +953,7 @@ class JointLoss(nn.Module):
         gt_vec = gt_vec.unsqueeze(1).float().cpu()
         pred_vec = pred_vec.unsqueeze(1).float().cpu()
 
-        scale, _ = torch.gels(gt_vec.data, pred_vec.data)
+        scale, _ = torch.lstsq(gt_vec.data, pred_vec.data)
         scale = scale[0,0]
 
         prediction_scaled = prediction * scale
