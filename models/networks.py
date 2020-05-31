@@ -1224,7 +1224,8 @@ class JointLoss(nn.Module):
 
         self.total_loss = total_loss
 
-        return total_loss.data[0]
+        # return total_loss.data[0]
+        return total_loss.data
 
 
     def compute_whdr(self, reflectance, judgements, delta=0.1):
@@ -1340,7 +1341,8 @@ class JointLoss(nn.Module):
 
         total_loss = self.AngleLoss(prediction_n, targets)
 
-        return total_loss.data[0]
+        # return total_loss.data[0]
+        return total_loss.data
 
     def evaluate_L0_loss(self, prediction_R, targets):
         # num_images = prediction_S.size(0) # must be even number         
