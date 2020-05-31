@@ -31,7 +31,7 @@ train_list_CGIntrinsics = full_root + '/CGIntrinsics/intrinsics_final/train_list
 # train_list_CGIntrinsics = full_root + './intrinsics_final/train_list/'
 data_loader_S = CreateDataLoaderCGIntrinsics(full_root, train_list_CGIntrinsics)
 
-train_list_Render = full_root + '/CGIntrinsics/intrinsics/render_list/'
+train_list_Render = full_root + '/CGIntrinsics/intrinsics_final/render_list/'
 # train_list_Render = full_root + './intrinsics/render_list/'
 data_loader_Render = CreateDataLoaderRender(full_root, train_list_Render)
 
