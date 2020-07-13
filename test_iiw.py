@@ -12,8 +12,9 @@ from data.data_loader import CreateDataLoaderIIWTest
 opt = TrainOptions().parse()  # set CUDA_VISIBLE_DEVICES before import torch
 
 
-root = "/home/zl548/phoenix24/"
-full_root = root +'/phoenix/S6/zl548/'
+# root = "/home/zl548/phoenix24/"
+# full_root = root +'/phoenix/S6/zl548/'
+full_root = '.'
 
 model = create_model(opt)
 
