@@ -121,17 +121,17 @@ def grouped_weighted_confusion_matrix(y_true, y_pred, y_pred_max, average_gradie
 
     conf_mx = np.zeros((3, 2), dtype=int)
 
-    for gt_label in xrange(3):
+    for gt_label in range(3):
         mask = y_true == gt_label # find ground truth
 
-        # for pred_label in xrange(2):
+        # for pred_label in range(2):
             # conf_mx[gt_label, pred_label] = np.sum(y_pred_max[mask] == pred_label)
         if gt_label < 2:
-            for pred_label in xrange(2):
+            for pred_label in range(2):
                 conf_mx[gt_label, pred_label] = np.sum(y_pred_max[mask] == pred_label)
         else:
 
-            for pred_label in xrange(2):
+            for pred_label in range(2):
                 gradient_mask = average_gradient[mask] 
                 correct_pred = (y_pred[mask] == pred_label)
                 gradient_mask = gradient_mask[correct_pred]
@@ -161,16 +161,16 @@ def grouped_confusion_matrix(y_true, y_pred, y_pred_max):
 
     conf_mx = np.zeros((3, 2), dtype=int)
 
-    for gt_label in xrange(3):
+    for gt_label in range(3):
         mask = y_true == gt_label # find ground truth
 
-        # for pred_label in xrange(2):
+        # for pred_label in range(2):
             # conf_mx[gt_label, pred_label] = np.sum(y_pred_max[mask] == pred_label)
         if gt_label < 2:
-            for pred_label in xrange(2):
+            for pred_label in range(2):
                 conf_mx[gt_label, pred_label] = np.sum(y_pred_max[mask] == pred_label)
         else:
-            for pred_label in xrange(2):
+            for pred_label in range(2):
                 conf_mx[gt_label, pred_label] = np.sum(y_pred[mask] == pred_label)
 
 

@@ -211,7 +211,7 @@ class Intrinsics_Model(BaseModel):
         output_count = len(thres_list)
         overall_conf_mx_list = [
             np.zeros((3, 2), dtype=int)
-            for _ in xrange(output_count)
+            for _ in range(output_count)
         ]
 
         count = 0 
@@ -273,7 +273,7 @@ class Intrinsics_Model(BaseModel):
             count += 1
 
             ret = []
-            for i in xrange(output_count):
+            for i in range(output_count):
                 overall_prec, overall_recall = saw_utils.get_pr_from_conf_mx(
                     conf_mx=overall_conf_mx_list[i], class_weights=class_weights,
                 )
