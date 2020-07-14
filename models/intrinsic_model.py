@@ -282,7 +282,8 @@ class Intrinsics_Model(BaseModel):
             # output_path = root + '/phoenix/S6/zl548/SAW/prediction/' + str(photo_id) + ".png.h5"
             prediction_Sr = torch.exp(prediction_S * 0.4545)
 
-            prediction_S_np = prediction_Sr.data[0,0,:,:].cpu().numpy() 
+            # prediction_S_np = prediction_Sr.data[0,0,:,:].cpu().numpy() 
+            prediction_S_np = prediction_Sr.data[0,:,:,:].cpu().numpy() 
             prediction_S_np = resize(prediction_S_np, (original_h, original_w), order=1, preserve_range=True)
             cv2.imwrite(output_dir+'SH{}.png'.format(photo_id), np.transpose(prediction_S_np*255.0, (1,2,0))[:,:,::-1])
 
