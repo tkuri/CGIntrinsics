@@ -240,7 +240,8 @@ class Intrinsics_Model(BaseModel):
             prediction_S_np = prediction_S.data[0,:,:,:].cpu().numpy()
             np_img = input_images.data[0,:,:,:].cpu().numpy()
 
-            output_path = "/phoenix/S6/zl548/SUNCG/intrinsics3/CGI_IIW_SAW_plot/" + str(photo_id) + ".h5"
+            # output_path = "/phoenix/S6/zl548/SUNCG/intrinsics3/CGI_IIW_SAW_plot/" + str(photo_id) + ".h5"
+            output_path = "./CGI_IIW_SAW_plot/" + str(photo_id) + ".h5"
             hdf5_file_write = h5py.File(output_path,'w')
 
             print(output_path)
