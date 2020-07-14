@@ -109,19 +109,18 @@ class Intrinsics_Model(BaseModel):
         input_images = Variable(input_.cuda() , requires_grad = False)
         prediction_R, prediction_S  = self.netG.forward(input_images)
 
-        # Write predicted images
-        prediction_R_np = prediction_R.data[0,:,:,:].cpu().numpy()
-        prediction_S_np = prediction_S.data[0,:,:,:].cpu().numpy()
-        np_img = input_images.data[0,:,:,:].cpu().numpy()
+        # # Write predicted images
+        # prediction_R_np = prediction_R.data[0,:,:,:].cpu().numpy()
+        # prediction_S_np = prediction_S.data[0,:,:,:].cpu().numpy()
+        # np_img = input_images.data[0,:,:,:].cpu().numpy()
 
-        photo_id = 0
+        # photo_id = 0
 
-        # png----------------------        
-        output_dir = "./CGI_IIW_SAW_plot/"
-        cv2.imwrite(output_dir+'AL{}.png'.format(photo_id), np.transpose(prediction_R_np*255.0, (1,2,0))[:,:,::-1])
-        cv2.imwrite(output_dir+'SH{}.png'.format(photo_id), np.transpose(prediction_S_np*255.0, (1,2,0))[:,:,::-1])
-        cv2.imwrite(output_dir+'input{}.png'.format(photo_id), np.transpose(np_img*255.0, (1,2,0))[:,:,::-1])
-
+        # # png----------------------        
+        # output_dir = "./CGI_IIW_SAW_plot/"
+        # cv2.imwrite(output_dir+'AL{}.png'.format(photo_id), np.transpose(prediction_R_np*255.0, (1,2,0))[:,:,::-1])
+        # cv2.imwrite(output_dir+'SH{}.png'.format(photo_id), np.transpose(prediction_S_np*255.0, (1,2,0))[:,:,::-1])
+        # cv2.imwrite(output_dir+'input{}.png'.format(photo_id), np.transpose(np_img*255.0, (1,2,0))[:,:,::-1])
 
         return self.criterion_joint.evaluate_WHDR(prediction_R, targets)
 
@@ -259,6 +258,9 @@ class Intrinsics_Model(BaseModel):
             # png----------------------
             
             output_dir = "./CGI_IIW_SAW_plot/"
+            print('prediction_R_np.shape:', prediction_R_np.shape)
+            print('prediction_S_np.shape:', prediction_S_np.shape)
+            print('np_img.shape:', np_img.shape)
             cv2.imwrite(output_dir+'AL{}.png'.format(photo_id), np.transpose(prediction_R_np*255.0, (1,2,0))[:,:,::-1])
             cv2.imwrite(output_dir+'SH{}.png'.format(photo_id), np.transpose(prediction_S_np*255.0, (1,2,0))[:,:,::-1])
             cv2.imwrite(output_dir+'input{}.png'.format(photo_id), np.transpose(np_img*255.0, (1,2,0))[:,:,::-1])
