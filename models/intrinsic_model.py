@@ -243,9 +243,10 @@ class Intrinsics_Model(BaseModel):
 
             # png----------------------
             
-            cv2.imwrite('AL{}.png'.format(photo_id), np.transpose(prediction_R_np, (1,2,0)))
-            cv2.imwrite('SH{}.png'.format(photo_id), np.transpose(prediction_S_np, (1,2,0)))
-            cv2.imwrite('input{}.png'.format(photo_id), np.transpose(np_img, (1,2,0)))
+            output_dir = "./CGI_IIW_SAW_plot/"
+            cv2.imwrite(output_dir+'AL{}.png'.format(photo_id), np.transpose(prediction_R_np*255.0, (1,2,0)))
+            cv2.imwrite(output_dir+'SH{}.png'.format(photo_id), np.transpose(prediction_S_np*255.0, (1,2,0)))
+            cv2.imwrite(output_dir+'input{}.png'.format(photo_id), np.transpose(np_img*255.0, (1,2,0)))
 
             # hdf5----------------------
             # output_path = "./CGI_IIW_SAW_plot/" + str(photo_id) + ".h5"
