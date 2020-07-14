@@ -108,6 +108,19 @@ class Intrinsics_Model(BaseModel):
         # switch to evaluation mode
         input_images = Variable(input_.cuda() , requires_grad = False)
         prediction_R, prediction_S  = self.netG.forward(input_images)
+
+        # Write predicted images
+        prediction_R_np = prediction_R.data[0,:,:,:].cpu().numpy()
+        prediction_S_np = prediction_S.data[0,:,:,:].cpu().numpy()
+        np_img = input_images.data[0,:,:,:].cpu().numpy()
+
+        # png----------------------        
+        output_dir = "./CGI_IIW_SAW_plot/"
+        cv2.imwrite(output_dir+'AL{}.png'.format(photo_id), np.transpose(prediction_R_np*255.0, (1,2,0))[:,:,::-1])
+        cv2.imwrite(output_dir+'SH{}.png'.format(photo_id), np.transpose(prediction_S_np*255.0, (1,2,0))[:,:,::-1])
+        cv2.imwrite(output_dir+'input{}.png'.format(photo_id), np.transpose(np_img*255.0, (1,2,0))[:,:,::-1])
+
+
         return self.criterion_joint.evaluate_WHDR(prediction_R, targets)
 
     def switch_to_train(self):
