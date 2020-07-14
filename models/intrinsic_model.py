@@ -262,7 +262,7 @@ class Intrinsics_Model(BaseModel):
             print('prediction_S_np.shape:', prediction_S_np.shape)
             print('np_img.shape:', np_img.shape)
             cv2.imwrite(output_dir+'AL{}.png'.format(photo_id), np.transpose(prediction_R_np*255.0, (1,2,0))[:,:,::-1])
-            cv2.imwrite(output_dir+'SH{}.png'.format(photo_id), np.transpose(prediction_S_np*255.0, (1,2,0))[:,:,::-1])
+            # cv2.imwrite(output_dir+'SH{}.png'.format(photo_id), np.transpose(prediction_S_np*255.0, (1,2,0))[:,:,::-1])
             cv2.imwrite(output_dir+'input{}.png'.format(photo_id), np.transpose(np_img*255.0, (1,2,0))[:,:,::-1])
 
             # hdf5----------------------
@@ -284,6 +284,7 @@ class Intrinsics_Model(BaseModel):
 
             prediction_S_np = prediction_Sr.data[0,0,:,:].cpu().numpy() 
             prediction_S_np = resize(prediction_S_np, (original_h, original_w), order=1, preserve_range=True)
+            cv2.imwrite(output_dir+'SH{}.png'.format(photo_id), np.transpose(prediction_S_np*255.0, (1,2,0))[:,:,::-1])
 
             # compute confusion matrix
             conf_mx_list = self.eval_on_images( shading_image_arr = prediction_S_np,
