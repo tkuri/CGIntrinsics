@@ -236,20 +236,20 @@ class Intrinsics_Model(BaseModel):
             # prediction_Sr = prediction_S.repeat(1,3,1,1)
 
             # Write predicted images
-            # prediction_R_np = prediction_R.data[0,:,:,:].cpu().numpy()
-            # prediction_S_np = prediction_S.data[0,:,:,:].cpu().numpy()
-            # np_img = input_images.data[0,:,:,:].cpu().numpy()
+            prediction_R_np = prediction_R.data[0,:,:,:].cpu().numpy()
+            prediction_S_np = prediction_S.data[0,:,:,:].cpu().numpy()
+            np_img = input_images.data[0,:,:,:].cpu().numpy()
 
-            # output_path = "/phoenix/S6/zl548/SUNCG/intrinsics3/CGI_IIW_SAW_plot/" + str(photo_id) + ".h5"
-            # hdf5_file_write = h5py.File(output_path,'w')
+            output_path = "/phoenix/S6/zl548/SUNCG/intrinsics3/CGI_IIW_SAW_plot/" + str(photo_id) + ".h5"
+            hdf5_file_write = h5py.File(output_path,'w')
 
-            # print(output_path)
+            print(output_path)
 
-            # hdf5_file_write.create_dataset("/prediction/img", data = np_img)            
-            # hdf5_file_write.create_dataset("/prediction/R", data = prediction_R_np)
-            # hdf5_file_write.create_dataset("/prediction/S", data = prediction_S_np)
+            hdf5_file_write.create_dataset("/prediction/img", data = np_img)            
+            hdf5_file_write.create_dataset("/prediction/R", data = prediction_R_np)
+            hdf5_file_write.create_dataset("/prediction/S", data = prediction_S_np)
 
-            # hdf5_file_write.close()
+            hdf5_file_write.close()
             # end of prediction
 
             # output_path = root + '/phoenix/S6/zl548/SAW/prediction/' + str(photo_id) + ".png.h5"
