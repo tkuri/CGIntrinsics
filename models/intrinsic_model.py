@@ -114,6 +114,8 @@ class Intrinsics_Model(BaseModel):
         prediction_S_np = prediction_S.data[0,:,:,:].cpu().numpy()
         np_img = input_images.data[0,:,:,:].cpu().numpy()
 
+        photo_id = 0
+
         # png----------------------        
         output_dir = "./CGI_IIW_SAW_plot/"
         cv2.imwrite(output_dir+'AL{}.png'.format(photo_id), np.transpose(prediction_R_np*255.0, (1,2,0))[:,:,::-1])
