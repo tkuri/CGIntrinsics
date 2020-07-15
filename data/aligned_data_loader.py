@@ -497,3 +497,25 @@ class IIWTESTDataLoader(BaseDataLoader):
     def __len__(self):
         return len(self.dataset)
 
+
+
+class MIDataLoader(BaseDataLoader):
+    def __init__(self,_root, _list_dir):
+        # BaseDataLoader.initialize(self)
+        transform = None
+
+        dataset = MI_ImageFolder(root=_root, \
+                list_dir =_list_dir, transform=transform)
+
+        self.data_loader = torch.utils.data.DataLoader(dataset, batch_size=1, shuffle=True, num_workers=int(1))
+        self.dataset = dataset
+
+    def name(self):
+        return 'MIDataLoader'
+
+    def load_data(self):
+        return self.data_loader
+
+    def __len__(self):
+        return len(self.dataset)
+

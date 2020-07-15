@@ -758,3 +758,121 @@ class SAW_ImageFolder(data.Dataset):
 
     def __len__(self):
         return len(self.img_list[self.current_o_idx])
+
+def MI_make_dataset(list_dir):
+    file_name = list_dir + "list_sub4.txt"
+    dir_list = pickle.load( open( file_name, "rb" ) )
+
+    images_list = []
+    for d in dir_list:
+        images_list += [list_dir + "/../data/" + d + '/dir_{}_mip2.jpg'.format(i) for i in range(i)]
+
+    print('images_list:', images_list)
+    return images_list
+    
+
+class MI_ImageFolder(data.Dataset):
+    def __init__(self, root, list_dir, transform=None, 
+                 loader=None):
+        # load image list from hdf5
+        img_list = MI_make_dataset(list_dir)
+        if len(img_list) == 0:
+            raise(RuntimeError("Found 0 images in: " + root + "\n"
+                               "Supported image extensions are: " + ",".join(IMG_EXTENSIONS)))
+        self.root = root
+        self.list_dir = list_dir
+        self.img_list = img_list
+        self.transform = transform
+        self.loader = loader
+        self.num_scale  = 4
+        self.sigma_I = 0.1
+        self.half_window = 1
+        self.height = 384
+        self.width = 512
+        self.original_h = 480
+        self.original_w = 640
+        self.rotation_range = 5.0
+        x = np.arange(-1, 2)
+        y = np.arange(-1, 2)
+        self.X, self.Y = np.meshgrid(x, y)
+        self.sigma_chro = 0.025
+
+    def DA(self, img, mode, random_pos, random_filp, h, w):
+
+        if random_filp > 0.5:
+            img = np.fliplr(img)
+
+        # img = rotate(img,random_angle, order = mode)
+        img = img[random_pos[0]:random_pos[1], random_pos[2]:random_pos[3], :]
+        img = resize(img, (h, w), order = mode)
+
+        return img
+
+    def load_MI(self, path):
+        img_name = path
+        img_path = self.root + "/CGIntrinsics/intrinsics_final/rendered/images/" + path
+        srgb_img = np.float32(io.imread(img_path))/ 255.0
+
+        # if rgb_img.shape[2] == 4:
+        #     print("=================rgb_img_path ", img_path)
+        #     rgb_img = rgb_img[:,:,0:3]
+
+        # srgb_img = rgb_img**(1.0/2.2)
+
+        mask_path = self.root + "/CGIntrinsics/intrinsics_final/rendered/mask/" + path[:-4].split('_')[0] + "_alpha.png"
+        mask = np.float32(io.imread(mask_path))/ 255.0
+        
+        if mask.shape[2] == 4:
+            print("=================mask_path ", img_path)
+            mask = mask[:,:,0:3]
+
+        mask = np.mean(mask, 2)
+        mask[mask < 0.99] = 0 
+        mask = skimage.morphology.erosion(mask, square(7))
+        mask = np.expand_dims(mask, axis = 2)
+        mask = np.repeat(mask, 3, axis= 2)
+
+        # do normal DA
+        # random_angle = random.random() * self.rotation_range * 2.0 - self.rotation_range # random angle between -5 --- 5 degree
+        random_filp = random.random()
+        random_start_y = random.randint(0, 19) 
+        random_start_x = random.randint(0, 19) 
+        random_pos = [random_start_y, random_start_y + srgb_img.shape[0] - 20, random_start_x, random_start_x + srgb_img.shape[1] - 20]
+
+        ratio = float(srgb_img.shape[0])/float(srgb_img.shape[1])
+
+        if ratio > 1.73:
+            h, w = 512, 256
+        elif ratio < 1.0/1.73:
+            h, w = 256, 512
+        elif ratio > 1.41:
+            h, w = 768, 512
+        elif ratio < 1./1.41:
+            h, w = 512, 768
+        elif ratio > 1.15:
+            h, w = 512, 384
+        elif ratio < 1./1.15:
+            h, w = 384, 512
+        else:
+            h, w = 512, 512
+
+        srgb_img = self.DA(srgb_img, 1, random_pos, random_filp, h, w)
+        mask = self.DA(mask, 0,  random_pos, random_filp, h, w)
+        
+        return srgb_img, mask
+
+    def __getitem__(self, index):
+        targets_1 = {}
+        img_path = self.img_list[index]
+        # split_img_path = img_path.split('/')
+        full_path = self.root + img_path
+        srgb_img, gt_R, gt_S, mask = self.load_MI(img_path)
+
+        final_img = torch.from_numpy(np.transpose(srgb_img, (2, 0, 1))).contiguous().float()
+        targets_1['mask'] = torch.from_numpy(np.transpose(mask, (2 , 0 ,1))).contiguous().float()
+        targets_1['path'] = full_path
+
+        return {'img_1': final_img, 'target_1': targets_1}
+
+    def __len__(self):
+        return len(self.img_list)
