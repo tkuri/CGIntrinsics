@@ -852,7 +852,7 @@ class MI_ImageFolder(data.Dataset):
         #     h, w = 512, 512
         h, w = 256, 256
 
-        srgb_img = self.DA(srgb_img, 1, random_pos, random_filp, h, w)
+        srgb_img = self.DA(srgb_img, 1, pos, random_filp, h, w)
         mask = self.DA(mask, 0,  random_pos, random_filp, h, w)
         
         return srgb_img, mask
