@@ -810,7 +810,7 @@ class MI_ImageFolder(data.Dataset):
 
     def load_MI(self, path):
         img_name = path
-        img_path = self.root + "/CGIntrinsics/Multi-Illumination/" + path
+        img_path = self.root + "/CGIntrinsics/Multi-Illumination/data/" + path
         srgb_img = np.float32(io.imread(img_path))/ 255.0
 
         # if rgb_img.shape[2] == 4:
