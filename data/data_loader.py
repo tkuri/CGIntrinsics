@@ -79,7 +79,7 @@ def CreateDataLoader_TEST(_root, _list_dir):
 
 def CreateDataLoader_MI(_root, _list_dir):
     data_loader = None
-    from data.aligned_data_loader import AlignedDataLoader_MI
-    data_loader = AlignedDataLoader_MI(_root, _list_dir)
+    from data.aligned_data_loader import MIDataLoader
+    data_loader = MIDataLoader(_root, _list_dir)
 
     return data_loader
