@@ -37,7 +37,7 @@ def test_mi(model, list_name):
         targets = data['target_1']
         SH = model.test_mi(stacked_img, targets)
 
-        path = targets['path']
+        path = targets['path'][0]
 
         print('targets:', targets['path'])
         tar_dir = os.path.dirname(path)
