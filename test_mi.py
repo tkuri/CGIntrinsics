@@ -36,6 +36,8 @@ def test_mi(model, list_name):
         targets = data['target_1']
         SH = model.test_mi(stacked_img, targets)
 
+        print('targets:', targets['path'])
+
         print('Save SH{}.png...'.format(i))
         cv2.imwrite(output_dir+'SH{}.png'.format(i), SH*255.0)
 
