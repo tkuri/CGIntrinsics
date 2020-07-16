@@ -769,7 +769,7 @@ def MI_make_dataset(list_dir):
 
     print('images_list:', images_list)
     return images_list
-    
+
 
 class MI_ImageFolder(data.Dataset):
     def __init__(self, root, list_dir, transform=None, 
@@ -810,7 +810,7 @@ class MI_ImageFolder(data.Dataset):
 
     def load_MI(self, path):
         img_name = path
-        img_path = self.root + "/CGIntrinsics/intrinsics_final/rendered/images/" + path
+        img_path = self.root + "/CGIntrinsics/Multi-Illumination/data/" + path
         srgb_img = np.float32(io.imread(img_path))/ 255.0
 
         # if rgb_img.shape[2] == 4:
@@ -819,8 +819,9 @@ class MI_ImageFolder(data.Dataset):
 
         # srgb_img = rgb_img**(1.0/2.2)
 
-        mask_path = self.root + "/CGIntrinsics/intrinsics_final/rendered/mask/" + path[:-4].split('_')[0] + "_alpha.png"
-        mask = np.float32(io.imread(mask_path))/ 255.0
+        # mask_path = self.root + "/CGIntrinsics/Multi-Illumination/data/" + path[:-4].split('_')[0] + "_alpha.png"
+        # mask = np.float32(io.imread(mask_path))/ 255.0
+        mask = np.ones_like(srgb_img)
         
         if mask.shape[2] == 4:
             print("=================mask_path ", img_path)
