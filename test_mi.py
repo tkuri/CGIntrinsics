@@ -8,6 +8,7 @@ from data.data_loader import CreateDataLoader
 from models.models import create_model
 # from data.data_loader import CreateDataLoader_TEST
 from data.data_loader import CreateDataLoader_MI
+import cv2
 
 opt = TrainOptions().parse()  # set CUDA_VISIBLE_DEVICES before import torch
 
