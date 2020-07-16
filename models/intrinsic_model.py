@@ -124,7 +124,7 @@ class Intrinsics_Model(BaseModel):
 
         return self.criterion_joint.evaluate_WHDR(prediction_R, targets)
 
-    def test_mi(self, id, input_, targets):
+    def test_mi(self, input_, targets):
         # switch to evaluation mode
         input_images = Variable(input_.cuda() , requires_grad = False)
         prediction_R, prediction_S  = self.netG.forward(input_images)
