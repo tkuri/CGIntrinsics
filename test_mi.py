@@ -32,7 +32,7 @@ def test_mi(model, list_name):
     for i, data in enumerate(dataset_mi):
         stacked_img = data['img_1']
         targets = data['target_1']
-        SH = model.evlaute_mi(stacked_img, targets)
+        SH = model.test_mi(stacked_img, targets)
 
         print('Save SH{}.png...'.format(i))
         cv2.imwrite(output_dir+'SH{}.png'.format(i), SH*255.0)
