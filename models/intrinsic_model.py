@@ -147,7 +147,7 @@ class Intrinsics_Model(BaseModel):
         prediction_S_np = prediction_Sr.data[0,0,:,:].cpu().numpy() 
         # prediction_S_np = resize(prediction_S_np, (original_h, original_w), order=1, preserve_range=True)
         inpur_images_np = input_images.data[0].cpu().numpy() 
-        inpur_images_np = np.transpose(inpur_images_np, (1,2,0))[:,:,-1]
+        inpur_images_np = np.transpose(inpur_images_np, (1,2,0))[:,:,::-1]
 
         return inpur_images_np, prediction_S_np
 
