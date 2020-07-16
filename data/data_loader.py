@@ -75,3 +75,11 @@ def CreateDataLoader_TEST(_root, _list_dir):
     # print(data_loader.name())
     # data_loader.initialize(opt)
     return data_loader
+
+
+def CreateDataLoader_MI(_root, _list_dir):
+    data_loader = None
+    from data.aligned_data_loader import AlignedDataLoader_MI
+    data_loader = AlignedDataLoader_MI(_root, _list_dir)
+
+    return data_loader
