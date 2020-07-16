@@ -38,7 +38,7 @@ def test_mi(model, list_name):
         input_img, SH = model.test_mi(stacked_img, targets)
 
         L_img = targets['L'][0]
-        L_img_np = L_img.data[0,:,:,:].cpu().numpy()
+        L_img_np = L_img.data[:,:,:].cpu().numpy()
         L_img_np = np.transpose(L_img_np, (1, 2, 0))
 
         path = targets['path'][0]
