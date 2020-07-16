@@ -765,7 +765,7 @@ def MI_make_dataset(list_dir):
 
     images_list = []
     for d in dir_list:
-        images_list += [list_dir + "/../data/" + d + '/dir_{}_mip2.jpg'.format(i) for i in range(25)]
+        images_list += [list_dir + d + '/dir_{}_mip2.jpg'.format(i) for i in range(25)]
 
     print('images_list:', images_list)
     return images_list
