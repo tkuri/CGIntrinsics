@@ -764,6 +764,7 @@ def MI_make_dataset(list_dir):
     dir_list = pickle.load( open( file_name, "rb" ) )
 
     images_list = []
+    lights_list = []
     for d in dir_list:
         images_list += [d + '/dir_{}_mip2.jpg'.format(i) for i in range(25)]
 
