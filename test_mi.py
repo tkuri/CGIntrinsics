@@ -35,7 +35,7 @@ def test_mi(model, list_name):
     for i, data in enumerate(dataset_mi):
         stacked_img = data['img_1']
         targets = data['target_1']
-        SH = model.test_mi(stacked_img, targets)
+        input_img, SH = model.test_mi(stacked_img, targets)
 
         path = targets['path'][0]
 
@@ -45,7 +45,7 @@ def test_mi(model, list_name):
         tar_file = os.path.splitext(os.path.basename(path))[0] + '_SH.png'
 
         os.makedirs(output_dir+tar_dir, exist_ok=True)
-        cv2.imwrite(output_dir+tar_dir+'/'+src_file, stacked_img[0]*255.0)
+        cv2.imwrite(output_dir+tar_dir+'/'+src_file, input_img*255.0)
         cv2.imwrite(output_dir+tar_dir+'/'+tar_file, SH*255.0)
         print('Save {}...'.format(tar_file))
 

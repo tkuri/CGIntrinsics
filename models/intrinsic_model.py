@@ -146,8 +146,9 @@ class Intrinsics_Model(BaseModel):
 
         prediction_S_np = prediction_Sr.data[0,0,:,:].cpu().numpy() 
         # prediction_S_np = resize(prediction_S_np, (original_h, original_w), order=1, preserve_range=True)
+        inpur_images_np = input_images.data[0].cpu().numpy() 
 
-        return prediction_S_np
+        return inpur_images_np, prediction_S_np
 
     def switch_to_train(self):
         self.netG.train()
