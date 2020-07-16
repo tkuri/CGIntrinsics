@@ -26,7 +26,7 @@ def test_mi(model, list_name):
     # print("============================= Testing EVAL MODE ============================", j)
     test_list_dir = full_root + '/CGIntrinsics/Multi-Illumination/' + list_name
     print(test_list_dir)
-    data_loader_MI = CreateDataLoader_MI(full_root, test_list_dir, j)
+    data_loader_MI = CreateDataLoader_MI(full_root, test_list_dir)
     dataset_mi = data_loader_MI.load_data()
 
     for i, data in enumerate(dataset_mi):
