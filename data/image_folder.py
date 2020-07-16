@@ -830,7 +830,7 @@ class MI_ImageFolder(data.Dataset):
         ori_size = srgb_img.shape
         size = 750
         start_y = 0
-        start_x = (ori_size[1]-size)/2
+        start_x = int((ori_size[1]-size)/2)
         pos = [start_y, start_y+size, start_x, start_x+size]
 
         # ratio = float(srgb_img.shape[0])/float(srgb_img.shape[1])
@@ -853,7 +853,7 @@ class MI_ImageFolder(data.Dataset):
         h, w = 256, 256
 
         srgb_img = self.DA(srgb_img, 1, pos, random_filp, h, w)
-        mask = self.DA(mask, 0,  random_pos, random_filp, h, w)
+        mask = self.DA(mask, 0,  pos, random_filp, h, w)
         
         return srgb_img, mask
 
