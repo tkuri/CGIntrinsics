@@ -767,21 +767,26 @@ def MI_make_dataset(list_dir):
     for d in dir_list:
         images_list += [d + '/dir_{}_mip2.jpg'.format(i) for i in range(25)]
 
+    for d in dir_list:
+        lights_list += [d + '/probes/dir_{}_chromes256.jpg'.format(i) for i in range(25)]
+
+
     print('images_list:', images_list)
-    return images_list
+    return images_list, lights_list
 
 
 class MI_ImageFolder(data.Dataset):
     def __init__(self, root, list_dir, transform=None, 
                  loader=None):
         # load image list from hdf5
-        img_list = MI_make_dataset(list_dir)
+        img_list, L_list = MI_make_dataset(list_dir)
         if len(img_list) == 0:
             raise(RuntimeError("Found 0 images in: " + root + "\n"
                                "Supported image extensions are: " + ",".join(IMG_EXTENSIONS)))
         self.root = root
         self.list_dir = list_dir
         self.img_list = img_list
+        self.L_list = L_list
         self.transform = transform
         self.loader = loader
 
@@ -796,10 +801,13 @@ class MI_ImageFolder(data.Dataset):
 
         return img
 
-    def load_MI(self, path):
-        img_name = path
-        img_path = self.root + "/CGIntrinsics/Multi-Illumination/data/" + path
+    def load_MI(self, img_path, L_path):
+        img_name = img_path
+        L_name = L_path
+        img_path = self.root + "/CGIntrinsics/Multi-Illumination/data/" + img_path
+        L_path = self.root + "/CGIntrinsics/Multi-Illumination/data/" + L_path
         srgb_img = np.float32(io.imread(img_path))/ 255.0
+        L_img = np.float32(io.imread(L_path))/ 255.0
 
         # if rgb_img.shape[2] == 4:
         #     print("=================rgb_img_path ", img_path)
@@ -855,18 +863,20 @@ class MI_ImageFolder(data.Dataset):
         srgb_img = self.DA(srgb_img, 1, pos, random_filp, h, w)
         mask = self.DA(mask, 0,  pos, random_filp, h, w)
         
-        return srgb_img, mask
+        return srgb_img, L_img, mask
 
     def __getitem__(self, index):
         targets_1 = {}
         img_path = self.img_list[index]
+        L_path = self.L_list[index]
         # split_img_path = img_path.split('/')
-        full_path = self.root + img_path
-        srgb_img, mask = self.load_MI(img_path)
+        # full_path = self.root + img_path
+        srgb_img, L_img, mask = self.load_MI(img_path, L_path)
 
         final_img = torch.from_numpy(np.transpose(srgb_img, (2, 0, 1))).contiguous().float()
+        targets_1['L'] = torch.from_numpy(np.transpose(L_img, (2, 0 , 1))).contiguous().float()
         targets_1['mask'] = torch.from_numpy(np.transpose(mask, (2 , 0 ,1))).contiguous().float()
-        targets_1['full_path'] = full_path
+        # targets_1['full_path'] = full_path
         targets_1['path'] = img_path
 
         return {'img_1': final_img, 'target_1': targets_1}
