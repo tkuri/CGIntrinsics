@@ -49,7 +49,7 @@ def test_mi(model, list_name):
         os.makedirs(output_dir+tar_dir, exist_ok=True)
         cv2.imwrite(output_dir+tar_dir+'/'+src_file, input_img*255.0)
         cv2.imwrite(output_dir+tar_dir+'/'+tar_file, SH*255.0)
-        cv2.imwrite(output_dir+tar_dir+'/'+L_file, L*255.0)
+        cv2.imwrite(output_dir+tar_dir+'/'+L_file, L_img*255.0)
         print('Save {}...'.format(tar_file))
 
 print("WE ARE IN TESTING PHASE!!!!")
