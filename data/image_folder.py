@@ -871,7 +871,8 @@ class MI_ImageFolder(data.Dataset):
 
         final_img = torch.from_numpy(np.transpose(srgb_img, (2, 0, 1))).contiguous().float()
         targets_1['mask'] = torch.from_numpy(np.transpose(mask, (2 , 0 ,1))).contiguous().float()
-        targets_1['path'] = full_path
+        targets_1['full_path'] = full_path
+        targets_1['path'] = img_path
 
         return {'img_1': final_img, 'target_1': targets_1}
 

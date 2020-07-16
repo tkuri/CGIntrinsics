@@ -507,7 +507,7 @@ class MIDataLoader(BaseDataLoader):
         dataset = MI_ImageFolder(root=_root, \
                 list_dir =_list_dir, transform=transform)
 
-        self.data_loader = torch.utils.data.DataLoader(dataset, batch_size=1, shuffle=True, num_workers=int(1))
+        self.data_loader = torch.utils.data.DataLoader(dataset, batch_size=1, shuffle=False, num_workers=int(1))
         self.dataset = dataset
 
     def name(self):
