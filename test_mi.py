@@ -37,16 +37,19 @@ def test_mi(model, list_name):
         targets = data['target_1']
         input_img, SH = model.test_mi(stacked_img, targets)
 
+        L_img = targets['L'][0]
         path = targets['path'][0]
 
         print('targets:', targets['path'])
         tar_dir = os.path.dirname(path)
         src_file = os.path.splitext(os.path.basename(path))[0] + '_input.png'
         tar_file = os.path.splitext(os.path.basename(path))[0] + '_SH.png'
+        L_file = os.path.splitext(os.path.basename(path))[0] + '_L.png'
 
         os.makedirs(output_dir+tar_dir, exist_ok=True)
         cv2.imwrite(output_dir+tar_dir+'/'+src_file, input_img*255.0)
         cv2.imwrite(output_dir+tar_dir+'/'+tar_file, SH*255.0)
+        cv2.imwrite(output_dir+tar_dir+'/'+L_file, L*255.0)
         print('Save {}...'.format(tar_file))
 
 print("WE ARE IN TESTING PHASE!!!!")
