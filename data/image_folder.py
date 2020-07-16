@@ -760,7 +760,7 @@ class SAW_ImageFolder(data.Dataset):
         return len(self.img_list[self.current_o_idx])
 
 def MI_make_dataset(list_dir):
-    file_name = list_dir + "list_sub4.txt"
+    file_name = list_dir + "list_sub2.txt"
     dir_list = pickle.load( open( file_name, "rb" ) )
 
     images_list = []
