@@ -41,9 +41,11 @@ def test_mi(model, list_name):
 
         print('targets:', targets['path'])
         tar_dir = os.path.dirname(path)
+        src_file = os.path.splitext(os.path.basename(path))[0] + '_input.png'
         tar_file = os.path.splitext(os.path.basename(path))[0] + '_SH.png'
 
         os.makedirs(output_dir+tar_dir, exist_ok=True)
+        cv2.imwrite(output_dir+tar_dir+'/'+src_file, stacked_img[0]*255.0)
         cv2.imwrite(output_dir+tar_dir+'/'+tar_file, SH*255.0)
         print('Save {}...'.format(tar_file))
 

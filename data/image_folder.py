@@ -784,18 +784,6 @@ class MI_ImageFolder(data.Dataset):
         self.img_list = img_list
         self.transform = transform
         self.loader = loader
-        self.num_scale  = 4
-        self.sigma_I = 0.1
-        self.half_window = 1
-        self.height = 384
-        self.width = 512
-        self.original_h = 480
-        self.original_w = 640
-        self.rotation_range = 5.0
-        x = np.arange(-1, 2)
-        y = np.arange(-1, 2)
-        self.X, self.Y = np.meshgrid(x, y)
-        self.sigma_chro = 0.025
 
     def DA(self, img, mode, random_pos, random_filp, h, w):
 
@@ -835,27 +823,34 @@ class MI_ImageFolder(data.Dataset):
 
         # do normal DA
         # random_angle = random.random() * self.rotation_range * 2.0 - self.rotation_range # random angle between -5 --- 5 degree
-        random_filp = random.random()
-        random_start_y = random.randint(0, 19) 
-        random_start_x = random.randint(0, 19) 
-        random_pos = [random_start_y, random_start_y + srgb_img.shape[0] - 20, random_start_x, random_start_x + srgb_img.shape[1] - 20]
+        random_filp = 0
+        # random_start_y = random.randint(0, 19) 
+        # random_start_x = random.randint(0, 19) 
+        # random_pos = [random_start_y, random_start_y + srgb_img.shape[0] - 20, random_start_x, random_start_x + srgb_img.shape[1] - 20]
+        ori_size = srgb_img.shape
+        size = 750
+        start_y = 0
+        start_x = (ori_size[1]-size)/2
+        pos = [start_y, start_y+size, start_x, start_x+size]
 
-        ratio = float(srgb_img.shape[0])/float(srgb_img.shape[1])
+        # ratio = float(srgb_img.shape[0])/float(srgb_img.shape[1])
+        ratio = 1
 
-        if ratio > 1.73:
-            h, w = 512, 256
-        elif ratio < 1.0/1.73:
-            h, w = 256, 512
-        elif ratio > 1.41:
-            h, w = 768, 512
-        elif ratio < 1./1.41:
-            h, w = 512, 768
-        elif ratio > 1.15:
-            h, w = 512, 384
-        elif ratio < 1./1.15:
-            h, w = 384, 512
-        else:
-            h, w = 512, 512
+        # if ratio > 1.73:
+        #     h, w = 512, 256
+        # elif ratio < 1.0/1.73:
+        #     h, w = 256, 512
+        # elif ratio > 1.41:
+        #     h, w = 768, 512
+        # elif ratio < 1./1.41:
+        #     h, w = 512, 768
+        # elif ratio > 1.15:
+        #     h, w = 512, 384
+        # elif ratio < 1./1.15:
+        #     h, w = 384, 512
+        # else:
+        #     h, w = 512, 512
+        h, w = 256, 256
 
         srgb_img = self.DA(srgb_img, 1, random_pos, random_filp, h, w)
         mask = self.DA(mask, 0,  random_pos, random_filp, h, w)
