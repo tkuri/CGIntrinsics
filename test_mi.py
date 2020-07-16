@@ -9,6 +9,7 @@ from models.models import create_model
 # from data.data_loader import CreateDataLoader_TEST
 from data.data_loader import CreateDataLoader_MI
 import cv2
+import os
 
 opt = TrainOptions().parse()  # set CUDA_VISIBLE_DEVICES before import torch
 
@@ -36,10 +37,15 @@ def test_mi(model, list_name):
         targets = data['target_1']
         SH = model.test_mi(stacked_img, targets)
 
-        print('targets:', targets['path'])
+        path = targets['path']
 
-        print('Save SH{}.png...'.format(i))
-        cv2.imwrite(output_dir+'SH{}.png'.format(i), SH*255.0)
+        print('targets:', targets['path'])
+        tar_dir = os.path.dirname(path)
+        tar_file = os.path.splitext(os.path.basename(path))[0] + '_SH.png'
+
+        os.makedirs(output_dir+tar_dir, exist_ok=True)
+        cv2.imwrite(output_dir+tar_dir+'/'+tar_file, SH*255.0)
+        print('Save {}...'.format(tar_file))
 
 print("WE ARE IN TESTING PHASE!!!!")
 test_mi(model, 'train_list/')
